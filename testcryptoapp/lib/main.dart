@@ -32,20 +32,24 @@ class CryptoApp extends StatelessWidget {
             fontSize: 14,),
         )
       ),
-      home: const MyHomePage(title: 'CryptoApp'),
+      routes: {
+        '/' : (context) => CryptoListScreen(title: '',),
+        '/coin' : (context) => CryptoCoinScreen(),
+      },
+      initialRoute: '/', //можно убрать
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class CryptoListScreen extends StatefulWidget {
+  const CryptoListScreen({super.key, required this.title});
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<CryptoListScreen> createState() => _CryptoListScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _CryptoListScreenState extends State<CryptoListScreen> {
 
   @override
   Widget build(BuildContext context) {
@@ -68,8 +72,22 @@ class _MyHomePageState extends State<MyHomePage> {
           subtitle: Text('20000\$', style: theme.textTheme.labelSmall
           ),
           trailing: const Icon(Icons.arrow_forward_ios),
+          onTap: () {
+            Navigator.of(context).pushNamed('/coin');
+          },
         ),
       )
+    );
+  }
+}
+
+class CryptoCoinScreen extends StatelessWidget {
+  const CryptoCoinScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Bitcoin')),
     );
   }
 }
