@@ -36,7 +36,7 @@ class CryptoApp extends StatelessWidget {
         '/' : (context) => CryptoListScreen(title: '',),
         '/coin' : (context) => CryptoCoinScreen(),
       },
-      initialRoute: '/', //можно убрать
+     // initialRoute: '/', //can be removed
     );
   }
 }
@@ -57,37 +57,70 @@ class _CryptoListScreenState extends State<CryptoListScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('CryptoApp'),
+        centerTitle: true,
       ),
       body: ListView.separated(
         itemCount: 10,
         separatorBuilder: (context, index) => const Divider(),
-        itemBuilder: (context, i) => ListTile(
+        itemBuilder: (context, i) {
+          const coinName = 'Bitcoin';
+        return ListTile(
           leading: SvgPicture.asset(
             'assets/svg/bitcoin-logo.svg', 
             height: 25, 
             width: 25,),
-          title: Text('Bitcoin',
-          style: theme.textTheme.bodyMedium
+          title: Text(
+            coinName,
+            style: theme.textTheme.bodyMedium
           ),
           subtitle: Text('20000\$', style: theme.textTheme.labelSmall
           ),
           trailing: const Icon(Icons.arrow_forward_ios),
           onTap: () {
-            Navigator.of(context).pushNamed('/coin');
+            Navigator.of(context).pushNamed(
+              '/coin',
+              arguments: coinName,
+              );
           },
-        ),
-      )
+        );
+        },
+      ),
     );
   }
 }
 
-class CryptoCoinScreen extends StatelessWidget {
+class CryptoCoinScreen extends StatefulWidget {
   const CryptoCoinScreen({super.key});
+
+  @override
+  State<CryptoCoinScreen> createState() => _CryptoCoinScreenState();
+}
+
+class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
+  
+  String? coinName;
+
+@override
+  void didChangeDependencies() {
+    final args  = ModalRoute.of(context)?.settings.arguments;
+    if (args == null) {
+      print('you must provive args');
+      return;
+    }
+    if (args is! String) {
+      print('You must provide string args');
+      return;
+    }
+    coinName = args;
+    setState(() {});
+    super.didChangeDependencies();
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Bitcoin')),
+      appBar: AppBar(title: Text(coinName ?? '...')),
     );
   }
 }
