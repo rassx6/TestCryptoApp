@@ -1,0 +1,16 @@
+import 'package:flutter/material.dart';
+import 'package:testcryptoapp/router/router.dart';
+import 'package:testcryptoapp/theme/theme.dart';
+
+class CryptoApp extends StatelessWidget {
+  const CryptoApp ({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'CryptoApp',
+      theme: darkTheme,
+      routes: routes,
+    );
+  }
+}
