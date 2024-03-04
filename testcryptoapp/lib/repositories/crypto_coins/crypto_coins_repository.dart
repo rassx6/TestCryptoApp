@@ -13,7 +13,7 @@ class CryptoCoinsRepository {
       name: e.key, 
       priceInUSD: (e.value as Map<String, dynamic>)['USD']),
       )}
-    .toList();
+    .toList();}
     return cryptoCoinsList;
   }
 }
