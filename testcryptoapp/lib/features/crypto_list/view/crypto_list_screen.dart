@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:testcryptoapp/repositories/crypto_coins/crypto_coins_repository.dart';
-import 'package:testcryptoapp/repositories/crypto_coins/models/crypto_coin.dart';
+import 'package:testcryptoapp/repositories/crypto_coins/crypto_coin.dart';
 import '../widgets/widgets.dart';
 
 
@@ -16,6 +15,11 @@ class _CryptoListScreenState extends State<CryptoListScreen> {
 
 List<CryptoCoin>? _cryptoCoinsList;
 
+@override
+  void initState() {
+    _loadCryptoCoins();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +29,9 @@ List<CryptoCoin>? _cryptoCoinsList;
         centerTitle: true,
       ),
       body: (_cryptoCoinsList == null) 
-      ? const SizedBox() :
+      ? const Center(child: CircularProgressIndicator()) :
       ListView.separated(
+      padding: const EdgeInsets.only(top: 16),
         itemCount: _cryptoCoinsList!.length,
         separatorBuilder: (context, index) => const Divider(),
         itemBuilder: (context, i) {
@@ -34,15 +39,12 @@ List<CryptoCoin>? _cryptoCoinsList;
         return CryptoCoinTile(coin: coin);
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.download),
-        onPressed: () async {
-         _cryptoCoinsList = await CryptoCoinsRepository().getCoinsList();
-         setState(() {
-           
-         });
-      }),
     );
   }
-}
 
+  Future<void> _loadCryptoCoins() async {
+    _cryptoCoinsList = await CryptoCoinsRepository().getCoinsList();
+    setState(() {
+    });
+  }
+}
