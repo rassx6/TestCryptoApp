@@ -1,4 +1,3 @@
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:testcryptoapp/repositories/crypto_coins/models/crypto_coin.dart';
 
@@ -16,10 +15,7 @@ class CryptoCoinTile extends StatelessWidget {
   Widget build(BuildContext context) {
      final theme = Theme.of(context);
     return ListTile(
-      leading: SvgPicture.asset(
-        'assets/svg/bitcoin-logo.svg', 
-        height: 25, 
-        width: 25,),
+      leading: Image.network(coin.imageUrl),
       title: Text(
         coin.name,
         style: theme.textTheme.bodyMedium
