@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:testcryptoapp/repositories/crypto_coins/crypto_coin.dart';
 import '../widgets/widgets.dart';
 
@@ -43,7 +45,7 @@ List<CryptoCoin>? _cryptoCoinsList;
   }
 
   Future<void> _loadCryptoCoins() async {
-    _cryptoCoinsList = await CryptoCoinsRepository().getCoinsList();
+    _cryptoCoinsList = await GetIt.I<AbstractCoinsRepository>().getCoinsList();
     setState(() {
     });
   }
